@@ -157,6 +157,10 @@ void reverse(Node **head)
 }
 
 
+
+
+
+
 // recursive;
 void rr(Node* pre,Node* cur,Node **head)
 {
@@ -213,7 +217,62 @@ Node* merge_two_sorted_lists(Node *a,Node* b)
 }
 
 
+Node* reverse_at_everyk(Node* head,int k)
+{
 
+    
+    Node* current=head;
+	Node* pre=NULL;
+	Node* next=NULL;
+	int i=0;
+
+	Node* prev=NULL;
+	while(current!=NULL && i<k)
+	{
+        next=current->next;// saving the next node;
+        current->next=pre;// chnage it;
+        pre=current;
+        current=next;// for going forward;
+        ++i;
+    }
+
+    // 1 2 3 4 5 6 7 8 9 10
+    // 3 2 1 6 5 4
+    if(next!=NULL) 
+    head->next=reverse_at_everyk(next,k);
+    return pre;
+
+}
+
+Node* rotate(Node* head, int k)
+{ Node* temp=head;
+   while(temp->next!=NULL){temp=temp->next;}// gettign last node;
+while(k-->0){
+       temp->next=head;
+ 		head=head->next;
+       temp=temp->next;
+   }
+      temp->next=NULL;
+
+   return head;
+}
+
+bool detectLoop(Node* head)
+{
+    if(!head) return false;
+    
+    Node* fast = head->next;
+    Node* slow = head;
+    
+    while( fast != slow)
+    {
+        if( !fast || !fast->next ) return false;
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    
+    return true;
+}
 
 
 
@@ -255,9 +314,11 @@ int main(){
   // traverse(b);
 
     /* Remove duplicates from linked list */
-    res=merge_two_sorted_lists(a, b); 
+    // res=merge_two_sorted_lists(a, b); 
     // cout << "Merged Linked List is: \n"; 
-    // traverse(res); 
+
+ head=reverse_at_everyk(head,4);
+    traverse(head); 
 
 
 
